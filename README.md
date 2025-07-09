@@ -1,9 +1,14 @@
+
+   ```bash
+   python -m venv .venv
+   cd .venv/Scripts
+   activate
+   cd ../..
+   pip install -r requirements.txt
+   ```
+
 # StarLabs Twitter Bot 2.1 🌟
 A powerful Python-based Twitter automation tool with multithreading support and comprehensive statistics tracking.
-
-## 📚 Documentation & Tutorials
-> ### [📖 English Tutorial](https://star-labs.gitbook.io/star-labs/twitter/eng)
-> ### [📖 Russian Tutorial](https://star-labs.gitbook.io/star-labs/twitter/ru)
 
 ## ✨ Features
 - 📊 Real-time statistics display
@@ -40,35 +45,10 @@ cd StarLabs-Twitter
 pip install -r requirements.txt
 ```
 
-3. Configure your accounts and settings (see Configuration section)
 
-4. Run the bot:
+3. Run the bot:
 ```bash
 python main.py
-```
-
-## 📁 Project Structure
-```
-StarLabs-Twitter/
-├── data/
-│   ├── accounts.xlsx        # Twitter accounts data
-│   ├── tweet_text.txt       # Tweets content
-│   ├── comment_text.txt     # Comments for interactions
-│   └── images/              # Images for media tweets
-├── src/
-│   ├── model/               # Core Twitter functionality
-│   │   ├── twitter/         # Twitter API handlers
-│   │   ├── instance.py      # Account instance management
-│   │   ├── prepare_data.py  # Data preparation utilities
-│   │   └── start.py         # Main execution flow
-│   └── utils/               # Utility functions
-│       ├── telegram_logger.py # Telegram integration
-│       ├── reader.py        # File and data readers
-│       ├── output.py        # CLI output formatting
-│       └── config.py        # Configuration manager
-├── process.py               # Main process handler
-├── config.yaml              # Configuration settings
-└── main.py                  # Entry point
 ```
 
 ## 📝 Configuration
@@ -99,10 +79,7 @@ SETTINGS:
   RANDOM_INITIALIZATION_PAUSE: [3, 10]    # Initial pause for accounts
   
   # Telegram notifications
-  SEND_TELEGRAM_LOGS: false
   SEND_ONLY_SUMMARY: false
-  TELEGRAM_BOT_TOKEN: "your_token_here"
-  TELEGRAM_USERS_IDS: [your_user_id]
 
 FLOW:
   SKIP_FAILED_TASKS: false        # Continue after task failures
@@ -157,11 +134,6 @@ The bot tracks detailed statistics for each run:
 - Task-specific performance metrics
 
 Optional Telegram reporting can send detailed statistics at the end of execution.
-
-## 🌐 Support
-- GitHub: https://github.com/0xStarLabs
-- Telegram: https://t.me/StarLabsTech
-- Chat: https://t.me/StarLabsChat
 
 ## ⚠️ Disclaimer
 This tool is for educational purposes only. Use at your own risk and in accordance with Twitter's Terms of Service.

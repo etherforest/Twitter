@@ -39,10 +39,6 @@ SETTINGS:
     SEND_TELEGRAM_LOGS: false
     # if true, bot will send ONLY summary to telegram. no logs for each account.
     SEND_ONLY_SUMMARY: false
-    # telegram bot token
-    TELEGRAM_BOT_TOKEN: "2315234123:JLkajhsdKJAHuwihadjkhsAJKd"
-    # telegram users ids
-    TELEGRAM_USERS_IDS: [1251234334]
 
 
 FLOW:

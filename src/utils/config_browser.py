@@ -66,8 +66,6 @@ def load_config():
                     "RANDOM_PAUSE_BETWEEN_ACCOUNTS": [3, 10],
                     "RANDOM_PAUSE_BETWEEN_ACTIONS": [3, 10],
                     "RANDOM_INITIALIZATION_PAUSE": [3, 10],
-                    "TELEGRAM_USERS_IDS": [],
-                    "TELEGRAM_BOT_TOKEN": "",
                     "SEND_TELEGRAM_LOGS": False,
                     "SEND_ONLY_SUMMARY": False,
                 }
@@ -1356,9 +1354,6 @@ function renderConfig(config) {
                 
                 // Карточка для Telegram
                 createCard(cardsContainer, 'Telegram Settings', 'paper-plane', [
-                    { key: 'TELEGRAM_BOT_TOKEN', value: config[key]['TELEGRAM_BOT_TOKEN'] },
-                    { key: 'TELEGRAM_USERS_IDS', value: config[key]['TELEGRAM_USERS_IDS'], isSpaceList: true },
-                    { key: 'SEND_TELEGRAM_LOGS', value: config[key]['SEND_TELEGRAM_LOGS'] },
                     { key: 'SEND_ONLY_SUMMARY', value: config[key]['SEND_ONLY_SUMMARY'] }
                 ], key);
             } else if (key === 'FLOW') {

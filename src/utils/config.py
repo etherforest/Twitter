@@ -16,8 +16,6 @@ class SettingsConfig:
     RANDOM_PAUSE_BETWEEN_ACCOUNTS: Tuple[int, int]
     RANDOM_PAUSE_BETWEEN_ACTIONS: Tuple[int, int]
     RANDOM_INITIALIZATION_PAUSE: Tuple[int, int]
-    TELEGRAM_USERS_IDS: List[int]
-    TELEGRAM_BOT_TOKEN: str
     SEND_TELEGRAM_LOGS: bool
     SEND_ONLY_SUMMARY: bool
     SHUFFLE_ACCOUNTS: bool
@@ -80,8 +78,6 @@ class Config:
                 RANDOM_INITIALIZATION_PAUSE=tuple(
                     data["SETTINGS"]["RANDOM_INITIALIZATION_PAUSE"]
                 ),
-                TELEGRAM_USERS_IDS=data["SETTINGS"]["TELEGRAM_USERS_IDS"],
-                TELEGRAM_BOT_TOKEN=data["SETTINGS"]["TELEGRAM_BOT_TOKEN"],
                 SEND_TELEGRAM_LOGS=data["SETTINGS"]["SEND_TELEGRAM_LOGS"],
                 SEND_ONLY_SUMMARY=data["SETTINGS"]["SEND_ONLY_SUMMARY"],
                 SHUFFLE_ACCOUNTS=data["SETTINGS"].get("SHUFFLE_ACCOUNTS", True),
