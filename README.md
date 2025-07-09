@@ -2,7 +2,7 @@
    ```bash
    python -m venv .venv
    cd .venv/Scripts
-   activate
+   ./activate
    cd ../..
    pip install -r requirements.txt
    ```
