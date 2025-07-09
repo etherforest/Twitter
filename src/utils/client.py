@@ -27,8 +27,8 @@ async def create_twitter_client(
 
     if proxy:
         session.proxies.update({
-            "http": "http://" + proxy,
-            "https": "http://" + proxy,
+            "http":  proxy,
+            "https": proxy,
         })
 
     generated_csrf_token = secrets.token_hex(16)

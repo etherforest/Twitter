@@ -1,6 +1,4 @@
 import re
-import random
-import string
 from pathlib import Path
 from typing import Literal, TypedDict, Union
 
@@ -8,31 +6,34 @@ from pydantic import BaseModel, Field, field_validator
 from pydantic.networks import HttpUrl, IPv4Address
 
 
-Protocol = Literal["http", "https"]
+# 支持的协议类型扩展为包括 socks5
+Protocol = Literal["http", "https", "socks5"]
+
+# 正则匹配支持各种代理格式，包括 user:pass@host:port 和 host:port:user:pass 等
 PROXY_FORMATS_REGEXP = [
     re.compile(
-        r"^(?:(?P<protocol>.+)://)?"  # Опционально: протокол
-        r"(?P<login>[^@:]+)"  # Логин (не содержит ':' или '@')
-        r":(?P<password>[^@]+)"  # Пароль (может содержать ':', но не '@')
-        r"[@:]"  # Символ '@' или ':' как разделитель
-        r"(?P<host>[^@:\s]+)"  # Хост (не содержит ':' или '@')
-        r":(?P<port>\d{1,5})"  # Порт: от 1 до 5 цифр
-        r"(?:\[(?P<refresh_url>https?://[^\s\]]+)\])?$"  # Опционально: [refresh_url]
+        r"^(?:(?P<protocol>.+)://)?"
+        r"(?P<login>[^@:]+)"
+        r":(?P<password>[^@]+)"
+        r"[@:]"
+        r"(?P<host>[^@:\s]+)"
+        r":(?P<port>\d{1,5})"
+        r"(?:\[(?P<refresh_url>https?://[^\s\]]+)\])?$"
     ),
     re.compile(
-        r"^(?:(?P<protocol>.+)://)?"  # Опционально: протокол
-        r"(?P<host>[^@:\s]+)"  # Хост (не содержит ':' или '@')
-        r":(?P<port>\d{1,5})"  # Порт: от 1 до 5 цифр
-        r"[@:]"  # Символ '@' или ':' как разделитель
-        r"(?P<login>[^@:]+)"  # Логин (не содержит ':' или '@')
-        r":(?P<password>[^@]+)"  # Пароль (может содержать ':', но не '@')
-        r"(?:\[(?P<refresh_url>https?://[^\s\]]+)\])?$"  # Опционально: [refresh_url]
+        r"^(?:(?P<protocol>.+)://)?"
+        r"(?P<host>[^@:\s]+)"
+        r":(?P<port>\d{1,5})"
+        r"[@:]"
+        r"(?P<login>[^@:]+)"
+        r":(?P<password>[^@]+)"
+        r"(?:\[(?P<refresh_url>https?://[^\s\]]+)\])?$"
     ),
     re.compile(
-        r"^(?:(?P<protocol>.+)://)?"  # Опционально: протокол
-        r"(?P<host>[^@:\s]+)"  # Хост (не содержит ':' или '@')
-        r":(?P<port>\d{1,5})"  # Порт: от 1 до 5 цифр
-        r"(?:\[(?P<refresh_url>https?://[^\s\]]+)\])?$"  # Опционально: [refresh_url]
+        r"^(?:(?P<protocol>.+)://)?"
+        r"(?P<host>[^@:\s]+)"
+        r":(?P<port>\d{1,5})"
+        r"(?:\[(?P<refresh_url>https?://[^\s\]]+)\])?$"
     ),
 ]
 
@@ -49,9 +50,6 @@ class ParsedProxy(TypedDict):
 def parse_proxy_str(proxy: str) -> ParsedProxy:
     if not proxy:
         raise ValueError(f"Proxy cannot be an empty string")
-
-    # Trim whitespace from the proxy string
-    proxy = proxy.strip()
 
     for pattern in PROXY_FORMATS_REGEXP:
         match = pattern.match(proxy)
@@ -71,7 +69,7 @@ def parse_proxy_str(proxy: str) -> ParsedProxy:
 
 def _load_lines(filepath: Path | str) -> list[str]:
     with open(filepath, "r") as file:
-        return [line.strip() for line in file.readlines() if line != "\n"]
+        return [line.strip() for line in file.readlines() if line.strip()]
 
 
 class PlaywrightProxySettings(TypedDict, total=False):
@@ -105,8 +103,8 @@ class Proxy(BaseModel):
 
     @field_validator("protocol")
     def protocol_validator(cls, v):
-        if v not in ["http", "https"]:
-            raise ValueError("Only http and https protocols are supported")
+        if v not in ["http", "https", "socks5"]:
+            raise ValueError("Only http, https, and socks5 protocols are supported")
         return v
 
     @classmethod
@@ -150,18 +148,11 @@ class Proxy(BaseModel):
 
     @property
     def as_proxies_dict(self) -> dict:
-        """Returns a dictionary of proxy settings in a format that can be used with the `requests` library.
-
-        The dictionary will have the following format:
-
-        - If the proxy protocol is "http", "https", or not specified, the dictionary will have the keys "http" and "https" with the proxy URL as the value.
-        - If the proxy protocol is a different protocol (e.g., "socks5"), the dictionary will have a single key with the protocol name and the proxy URL as the value.
-        """
         proxies = {}
-        if self.protocol in ("http", "https", None):
+        if self.protocol in ("http", "https", None, "socks5"):
             proxies["http"] = self.as_url
             proxies["https"] = self.as_url
-        elif self.protocol:
+        else:
             proxies[self.protocol] = self.as_url
         return proxies
 
@@ -172,7 +163,6 @@ class Proxy(BaseModel):
     def __repr__(self):
         if self.refresh_url:
             return f"Proxy({self.as_url}, [{self.refresh_url}])"
-
         return f"Proxy({self.as_url})"
 
     def __str__(self) -> str:

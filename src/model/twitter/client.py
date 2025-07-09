@@ -234,7 +234,7 @@ class Twitter:
                 raise Exception(f"{response.text}")
 
         except Exception as e:
-            logger.error(f"[{self.account_index}] Failed to follow user: {e}")
+            logger.error(f"[{self.account_index}] {username} Failed to follow user: {e}")
             raise e
 
     @retry_async(default_value=False)

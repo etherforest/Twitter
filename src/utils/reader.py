@@ -83,7 +83,7 @@ def read_accounts_from_excel(
                     try:
                         proxy_obj = Proxy.from_str(proxy_str)
                         # Convert to user:pass@ip:port format
-                        proxy_str = proxy_obj.get_default_format()
+                        proxy_str = proxy_obj.as_url
                     except Exception as e:
                         # Add row number to error message
                         raise ValueError(
