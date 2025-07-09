@@ -1,6 +1,5 @@
 from .client import create_twitter_client, get_headers
 from .reader import read_txt_file, read_accounts_from_excel, read_pictures
-from .output import show_dev_info, show_logo, show_menu
 from .config import get_config
 from .proxy_parser import Proxy
 from .config_browser import run
