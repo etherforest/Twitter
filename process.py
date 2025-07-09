@@ -5,7 +5,6 @@ from loguru import logger
 
 import src.utils
 import src.model
-from src.utils.check_github_version import check_version
 from src.utils.logs import (
     ProgressTracker,
     create_progress_tracker,
