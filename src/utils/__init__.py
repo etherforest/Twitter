@@ -12,8 +12,6 @@ __all__ = [
     "get_headers",
     "read_config",
     "read_txt_file",
-    "show_dev_info",
-    "show_logo",
     "Proxy",
     "run",
     "get_config",
