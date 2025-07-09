@@ -18,8 +18,6 @@ if platform.system() == "Windows":
 async def main():
 
     # You can pass a proxy string in format "user:pass@ip:port" if needed
-    await check_version(VERSION, proxy="")
-
     configuration()
     await start()
 
