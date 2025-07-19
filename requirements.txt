@@ -1,2 +1,5 @@
 loguru==0.7.3
 urllib3==2.5.0
+pydantic
+primp==0.14.0
+jproperties==2.1.2
