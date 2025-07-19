@@ -155,8 +155,8 @@ def main():
         return
 
     threads = []
-    for i in range(len(CODE_LIST)):
-        t = threading.Thread(target=worker, args=(i + 1, domains, CODE_LIST[i]), name=f"Worker-{i + 1}")
+    for i in range(30):
+        t = threading.Thread(target=worker, args=(i + 1, domains, "80A69"), name=f"Worker-{i + 1}")
         t.start()
         threads.append(t)
 
