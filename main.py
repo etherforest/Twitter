@@ -1,17 +1,23 @@
 import asyncio
 import random
 import re
-import threading
 import time
-from primp import AsyncClient
 
 import requests
 import urllib3
 from loguru import logger
+from primp import AsyncClient
 
 from c import Client, new_client
 from common import CommonParser
 from proxy_parser import Proxy
+
+# pyarmor gen -O dist -r ./ --exclude ./.venv
+
+
+# pyinstaller --paths=./dist --hidden-import loguru --hidden-import urllib3 --hidden-import pydantic --hidden-import primp --hidden-import jproperties ./main.py --clean
+
+
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 DROPMAIL_TOKEN = "YOUR_DROPMAIL_TOKEN"
